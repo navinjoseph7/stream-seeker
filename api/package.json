@@ -1,12 +1,12 @@
 {
-  "name": "acebook",
+  "name": "streamseeker",
   "version": "0.0.0",
-  "description": "Template for the AceBook project",
+  "description": "Template for the StreamSeeker project",
   "license": "CC BY-NC-SA",
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "start:test": "MONGODB_URL='mongodb://0.0.0.0/acebook_test' npm start",
+    "start:test": "MONGODB_URL='mongodb://0.0.0.0/streamseeker_test' npm start",
     "test": "jest"
   },
   "engines": {
