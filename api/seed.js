@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Movie = require('./models/movie'); // Import your Movie model
+const Movie = require('./models/movie');
 
 mongoose.connect('mongodb://localhost/streamseeker', {
   useNewUrlParser: true,
