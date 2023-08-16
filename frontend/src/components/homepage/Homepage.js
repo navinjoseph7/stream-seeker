@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import '../homepage/Homepage.css'
 
 const Homepage = () => {
     const [searchResults, setSearchResults] = useState([]);
@@ -21,8 +22,8 @@ const Homepage = () => {
 
 
     return (
-        <div>
-            <h1>Search for a movie of tv show title</h1>
+        <div className="main-homepage-div">
+            <h1 id='heading'>Search for a movie or tv show title</h1>
             <input
                 type='text'
                 placeholder="Enter a title"
@@ -36,9 +37,11 @@ const Homepage = () => {
                 <div>
                 {searchResults.map((result) => (
                     <div>
-                    <p key={result._id}>{result.title}</p>
+                    <p id='title' key={result._id}>{result.title}</p>
                     <p key={result._id}>Synopsis: {result.synopsis}</p>
+                    <p key={result._id}>Release Year: {result.release_year}</p>
                     <p key={result._id}>Rating: {result.rating}</p>
+                    <p key={result._id}>Links: {result.links}</p>
                     </div>
                 ))}
                 </div>
