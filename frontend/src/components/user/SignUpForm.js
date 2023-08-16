@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import "./SignUpForm.css";
 
 const SignUpForm = ({ navigate }) => {
 
@@ -60,39 +61,86 @@ const SignUpForm = ({ navigate }) => {
 
 
     return (
-      <form onSubmit={handleSubmit}>
-          <h1>SignUp Page</h1>
-          <input placeholder="Name" id="name" type='text' value={ name } onChange={handleNameChange} />
-          <input placeholder="Email" id="email" type='text' value={ email } onChange={handleEmailChange} />
-          <input placeholder="Password" id="password" type='password' value={ password } onChange={handlePasswordChange} />
-          <div>
-    <h4>Choose Subscriptions:</h4>
-    <label>
-      <input type="checkbox" value="Netflix" onChange={handleSubscriptionChange} />
-      Netflix
-    </label>
-    <label>
-      <input type="checkbox" value="Amazon Prime" onChange={handleSubscriptionChange} />
-      Amazon Prime
-    </label>
-    {/* Add more platforms here */}
-  </div>
-  <div>
-    <h4>Choose Genres:</h4>
-    <label>
-      <input type="checkbox" value="Action" onChange={handleGenreChange} />
-      Action
-    </label>
-    <label>
-      <input type="checkbox" value="Drama" onChange={handleGenreChange} />
-      Drama
-    </label>
-    {/* Add more genres here */}
-  </div>
-  
-        <input id='submit' type="submit" value="Submit" />
+      <form className="sign-up-form" onSubmit={handleSubmit}>
+        <h1>Stream Seeker</h1>
+        <h2>Sign Up</h2>
+        <input
+          className="sign-up-input"
+          placeholder="Name"
+          id="name"
+          type="text"
+          value={name}
+          onChange={handleNameChange}
+        />
+        <input
+          className="sign-up-input"
+          placeholder="Email"
+          id="email"
+          type="text"
+          value={email}
+          onChange={handleEmailChange}
+        />
+        <input
+          className="sign-up-input"
+          placeholder="Password"
+          id="password"
+          type="password"
+          value={password}
+          onChange={handlePasswordChange}
+        />
+        <div className="subscription-section">
+          <h4>Choose Subscriptions:</h4>
+          <label>
+            <input
+              className="subscription-checkbox"
+              type="checkbox"
+              value="Netflix"
+              onChange={handleSubscriptionChange}
+            />
+            Netflix
+          </label>
+          <label>
+            <input
+              className="subscription-checkbox"
+              type="checkbox"
+              value="Amazon Prime"
+              onChange={handleSubscriptionChange}
+            />
+            Amazon Prime
+          </label>
+          {/* Add more platforms here */}
+        </div>
+        <div className="genre-section">
+          <h4>Choose Genres:</h4>
+          <label>
+            <input
+              className="genre-checkbox"
+              type="checkbox"
+              value="Action"
+              onChange={handleGenreChange}
+            />
+            Action
+          </label>
+          <label>
+            <input
+              className="genre-checkbox"
+              type="checkbox"
+              value="Drama"
+              onChange={handleGenreChange}
+            />
+            Drama
+          </label>
+          {/* Add more genres here */}
+        </div>
+        <input
+          className="sign-up-submit-button"
+          id="signup"
+          type="submit"
+          value="Sign Up"
+        />
       </form>
     );
+
 }
 
 export default SignUpForm;
