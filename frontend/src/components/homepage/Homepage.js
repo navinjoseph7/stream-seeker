@@ -11,13 +11,11 @@ const Homepage = () => {
         try {
             const response = await fetch(`/homepage/bytitle/${title}`);
             const data = await response.json();
-            console.log('Data', data)
             setSearchResults([data]);
             setShowResults(true)
         } catch (error) {
             console.error("Error fetching search results: ", error)
         }
-        console.log('Homepage component line 16',searchResults)
     };
 
 
