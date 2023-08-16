@@ -1,0 +1,35 @@
+
+.sign-up-form {
+    max-width: 300px;
+    margin: 60px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.sign-up-form h1 {
+    text-align: center;
+}
+
+.sign-up-input {
+    width: 90%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.sign-up-submit-button {
+    width: 40%;
+    padding: 10px;
+    margin: 10px 5px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.subscription-checkbox, .genre-checkbox {
+    margin: 0.6rem;
+}
