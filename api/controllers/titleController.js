@@ -36,7 +36,7 @@ const TitleController = {
         const links = second_data.results.GB;
         const movie_info={movie_id:movie_id , title:original_title,  overview:overview, poster_path: poster_path ,rating:rating,links: links}
         console.log(movie_info);
-        res.status(200).json(movie_info);
+        res.status(200).json(data.results);
         
     }
 
