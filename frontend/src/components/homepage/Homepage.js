@@ -29,19 +29,24 @@ const Homepage = () => {
                 onChange={(event) => setTitle(event.target.value)}
             />
             <button onClick={handleSearch}>Search</button>
+            
             { showResults && (
+                
             <div>
+                {console.log(searchResults)}
                 <h2>Search Results</h2>
                 <div>
-                {searchResults.map((result) => (
+                {/* {searchResults.map((result) => ( */}
                     <div>
-                    <p id='title' key={result._id}>{result.title}</p>
-                    <p key={result._id}>Synopsis: {result.synopsis}</p>
-                    <p key={result._id}>Release Year: {result.release_year}</p>
-                    <p key={result._id}>Rating: {result.rating}</p>
-                    <p key={result._id}>Links: {result.links}</p>
+                    <p  >{searchResults[0].title}</p>
+                    <p >Synopsis: {searchResults[0].overview}</p>
+                    <p >Poster: <img src={searchResults[0].poster_path}></img></p>
+                    <p >Rating: {searchResults[0].rating}</p>
+                    <p >Links: {searchResults[0]?.links?.link}</p>
+                    
+                    
                     </div>
-                ))}
+                {/* ))} */}
                 </div>
             </div>
             )}
