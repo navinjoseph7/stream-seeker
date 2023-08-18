@@ -6,7 +6,6 @@ describe("User information page", () => {
 
 	it("calls the users/userID endpoint and lists the users info", () => {
     window.localStorage.setItem("token", "fakeToken")
-    // const userId = 1;
 
     cy.intercept('GET', '/users/1', { 
         email: "testEmail", 
