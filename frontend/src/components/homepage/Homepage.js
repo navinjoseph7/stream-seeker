@@ -35,7 +35,7 @@ const Homepage = () => {
             <div>
               {searchResults.map((result, index) => (
                 <div key={index}>
-                  <p>{result.title}</p>
+                  <h2>{result.title}</h2>
                   <p>Synopsis: {result.overview}</p>
                   <div className="poster-container">
                     <img
