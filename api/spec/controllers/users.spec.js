@@ -2,6 +2,11 @@ const app = require("../../app");
 const request = require("supertest");
 require("../mongodb_helper");
 const User = require('../../models/user')
+const JWT = require("jsonwebtoken");
+const TokenGenerator = require("../../lib/token_generator");
+const secret = process.env.JWT_SECRET;
+
+let token;
 
 describe("/users", () => {
   beforeEach( async () => {
@@ -59,4 +64,49 @@ describe("/users", () => {
       expect(users.length).toEqual(0)
     });
   })
-})
+
+  describe("GET /users/:id", () => {
+    test("returns user details when authorised", async () => {
+      const user = new User({
+        email: '1test@example.com',
+        password: '1password',
+        name: '1testuser',
+        subscriptions: ['Netflix'],
+        genres: ['Action'],
+      });
+      const savedUser = await user.save();
+      const token = TokenGenerator.jsonwebtoken(savedUser._id);
+    
+      const response = await request(app)
+        .get(`/users/${savedUser._id}`)
+        .set("Authorization", `Bearer ${token}`)
+    
+      expect(response.statusCode).toBe(200);
+      expect(response.body.email).toEqual('1test@example.com')
+      expect(response.body.password).toBeUndefined();
+      expect(response.body.name).toEqual('1testuser');
+      expect(response.body.subscriptions).toEqual(['Netflix']);
+      expect(response.body.genres).toEqual(['Action']);
+    });
+    test("returns 401 if not authorized", async () => {
+      const user = new User({
+        email: '2test@example.com',
+        password: '2password2',
+        name: '2testuser',
+        subscriptions: ['Disney'],
+        genres: ['Comedy'],
+      });
+      const savedUser = await user.save();
+      const token = TokenGenerator.jsonwebtoken(savedUser._id);
+
+      const response = await request(app)
+        .get(`/users/4eb6e7e7e9b7f4194e000001`)
+        .set("Authorization", `Bearer ${token}`)
+      expect(response.statusCode).toBe(401);
+    
+    });
+
+  });
+  
+
+});
