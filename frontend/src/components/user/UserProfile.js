@@ -35,7 +35,7 @@ const UserProfile = () => {
                 <p className='genres' data-cy="genres">Genres: {userInfo.genres}</p>
             </div>
         </div>
-        {/* <a href="/posts">Go back to my feed </a> */}
+        {/* <a href="/posts">Go back to homepage </a> */}
         </div>
         </>
         ) 
