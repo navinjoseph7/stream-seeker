@@ -28,10 +28,24 @@ const UserProfile = () => {
         <div className='info-div'>
         <h2 className='heading'>Account Information</h2>
         <div>
-            {/* <p className='username' data-cy="username">Username: {userInfo.username}</p> */}
-            <p className='email' data-cy="email">Email: {userInfo.email}</p>
+            <div>
+                <p className='email' data-cy="email">Email: {userInfo.email}</p>
+                <button>Edit</button>
+            </div>
+            <div>
+                <p className='name' data-cy="name">Name: {userInfo.name}</p>
+                <button>Edit</button>
+            </div>
+            <div>
+                <p className='subscriptions' data-cy="subscriptions">Subscriptions: {userInfo.subscriptions}</p>
+                <button>Edit</button>
+            </div>
+            <div>
+                <p className='genres' data-cy="genres">Genres: {userInfo.genres}</p>
+                <button>Edit</button>
+            </div>
         </div>
-        <a href="/posts">Go back to my feed </a>
+        {/* <a href="/posts">Go back to my feed </a> */}
         </div>
         </>
         ) 

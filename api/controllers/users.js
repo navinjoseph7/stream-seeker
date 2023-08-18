@@ -44,8 +44,26 @@ const UsersController = {
     } catch (error) {
       return res.status(401).json({ "error": error });
     }
-  }
-  
+  },
+
+  Update: async (req, res) => {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    user.subscriptions = req.body.subscriptions;
+    user.genres = req.body.genres
+
+    user.save((err) => {
+      if (err) {
+        return res.status(500).json({ error: "Unauthorised" });
+      }
+      const token = TokenGenerator.jsonwebtoken(req.user_id);
+      res.status(201).json({ message: "OK", token: token, user: user});
+      console.log("HERE", user)
+    });
+  },
   
 };
 

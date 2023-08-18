@@ -6,14 +6,20 @@ describe("User information page", () => {
 
 	it("calls the users/userID endpoint and lists the users info", () => {
     window.localStorage.setItem("token", "fakeToken")
-    const userId = 1;
+    // const userId = 1;
 
-    cy.intercept('GET', `/users/${userId}`, { email: "testEmail", name: "testUserName", subscriptions: 'Netflix', genres: 'Actin', token: 'fakeToken' }).as('getUserInfo');
+    cy.intercept('GET', '/users/1', { 
+        email: "testEmail", 
+        name: "testUserName", 
+        subscriptions: ['Netflix'], 
+        genres: ['Action'], 
+        token: 'fakeToken' 
+        }).as('getUserInfo');
 
     cy.mount(
-        <MemoryRouter initialEntries={[`/users/${userId}`]}>  
+        <MemoryRouter initialEntries={['/users/1']}>  
             <Routes>
-            <Route path="/users/:id" element={<UserProfile />} />
+                <Route path="/users/:userId" element={<UserProfile />} />
             </Routes>
         </MemoryRouter>
     );
@@ -21,10 +27,9 @@ describe("User information page", () => {
     cy.wait('@getUserInfo')
 
     cy.get('[data-cy=email]').should("contain.text", "Email: testEmail");
-    //cy.get('[data-cy=name]').should('contain.text', "name: testUserName");
-    //cy.get('[data-cy=subscriptins]').should('contain.text', "name: testUserName");
-    //cy.get('[data-cy=name]').should('contain.text', "name: testUserName");
-
+    cy.get('[data-cy=name]').should('contain.text', "Name: testUserName");
+    cy.get('[data-cy=subscriptions]').should('contain.text', "Subscriptions: Netflix");
+    cy.get('[data-cy=genres]').should('contain.text', "Genres: Action");
 	})
 
 })
