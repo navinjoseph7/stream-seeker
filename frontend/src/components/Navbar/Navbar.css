@@ -1,0 +1,27 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #333;
+    color: #fff;
+}
+
+.brand a {
+font-size: 1.5rem;
+font-weight: bold;
+text-decoration: none;
+color: #fff;
+}
+
+.links {
+list-style: none;
+display: flex;
+gap: 1rem;
+}
+
+.links li a {
+text-decoration: none;
+color: #fff;
+}
+
