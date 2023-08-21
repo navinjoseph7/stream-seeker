@@ -2,6 +2,7 @@ import { MemoryRouter, Route, Routes} from "react-router"
 import UserProfile from "./UserProfile"
 import React from "react"
 
+
 describe("User information page", () => {
 
 	it("calls the users/userID endpoint and lists the users info", () => {

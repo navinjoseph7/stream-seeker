@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Navbar from "../Navbar/Navbar"
 
 
 const UserProfile = () => {
@@ -25,6 +26,7 @@ const UserProfile = () => {
 
     return(
         <>
+        <Navbar/>
         <div className='info-div'>
         <h2 className='heading'>Your Profile</h2>
         <div>

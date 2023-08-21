@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import '../homepage/Homepage.css'
+import Navbar from "../Navbar/Navbar";
 
 const Homepage = () => {
     const [searchResults, setSearchResults] = useState([]);
@@ -21,6 +22,7 @@ const Homepage = () => {
 
     return (
         <div className="main-homepage-div">
+            <Navbar/>
             <h1 id='heading'>Search for a movie or tv show title</h1>
             <input
                 type='text'
