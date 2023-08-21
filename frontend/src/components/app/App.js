@@ -17,7 +17,7 @@ const App = () => {
           <Route path='/homepage' element={<Homepage/>}/>
           <Route path='/login'  element={<LoginForm  navigate={ useNavigate() }/>}/>
           <Route path='/signup' element={<SignUpForm navigate={ useNavigate() }/>}/>
-          <Route path="/movie-links/:movieId/:movieTitle" element={<MovieLinks/>} />
+          <Route path="/movie-links/:movieId/:movieTitle" element={<MovieLinks navigate={ useNavigate() }/>} />
         </Routes>
     );
 }
