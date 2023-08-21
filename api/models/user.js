@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Movie = require('./movie')
 
 const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
@@ -6,6 +7,7 @@ const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },
   subscriptions: { type: Array, required: false },
   genres: { type: Array, required: false },
+  watchLater: []
 });
 
 const User = mongoose.model("User", UserSchema);
