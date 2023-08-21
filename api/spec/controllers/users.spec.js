@@ -109,30 +109,42 @@ describe("/users", () => {
   });
 
   describe("PUT, when logged in user updates info", () => {
-    test("the response code is 201", async () => {
-      const user = new User({
+    test("the response code is 201 and subscription/genre fields are updated", async () => {
+        const user = new User({
         email: '1test@example.com',
         password: '1password',
         name: '1testuser',
         subscriptions: ['Netflix'],
         genres: ['Action'],
-      });
-      const savedUser = await user.save();
-      const userId = savedUser.id
-      const token = TokenGenerator.jsonwebtoken(userId);      
-      
-      let response = await request(app)
+        });
+        const savedUser = await user.save();
+        const userId = savedUser.id;
+        const token = TokenGenerator.jsonwebtoken(userId);
+    
+        const updatedData = {
+        email: '1test@example.com',
+        password: '1password',
+        name: '1testuser',
+        subscriptions: ['Prime'],
+        genres: ['Horror'],
+        };
+    
+        let response = await request(app)
         .put(`/users/${userId}`)
         .set("Authorization", `Bearer ${token}`)
-        .send({
-          email: '1test@example.com',
-          password: '1password',
-          name: '1testuser',
-          subscriptions: ['Prime'],
-          genres: ['Horror'],
-        });
-      expect(response.status).toEqual(201);
-    })
+        .send(updatedData);
+    
+        expect(response.status).toEqual(201);
+    
+        const updatedUser = await User.findById(userId);
+    
+        const updatedSubscriptions = updatedUser.subscriptions.toObject();
+        const updatedGenres = updatedUser.genres.toObject();
+    
+        expect(updatedSubscriptions).toEqual(updatedData.subscriptions);
+    
+        expect(updatedGenres).toEqual(updatedData.genres);
+    });
   })
 
 })
