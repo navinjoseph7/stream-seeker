@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {Link} from 'react-router-dom'
 import Navbar from '../Navbar/Navbar';
 
 const WatchLater = () => {
@@ -32,10 +33,18 @@ const WatchLater = () => {
         {watchLaterMovies.length > 0 ? (
         <ul>
         {watchLaterMovies.map((movie) => (
-            <li key={movie._id}>
-            <h3>{movie.title}</h3>
-            <p>{movie.synopsis}</p>
-            </li>
+            <div key={movie._id}>
+            <Link to={`/movie-links/${movie.id}/${movie.title}`} style={{ textDecoration: 'none' }}><h2>{movie.title}</h2></Link>
+            <p>Synopsis: {movie.overview}</p>
+            <div className="poster-container">
+                    <img
+                    className="poster-image"
+                    src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} // poster_path is null in some movies
+                    alt={movie.title}
+                    />
+            </div>
+            <p>Rating: {movie.vote_average}</p>
+            </div>
         ))}
         </ul>
             ) : (

@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import '../homepage/Homepage.css';
+import React, {useState} from "react";
+import { Link, BrowserRouter as Router, Route, Switch } from "react-router-dom"; // Import React Router modules
+import MovieLinks from "../movielinks/MovieLinks";
+import '../homepage/Homepage.css'
 import Navbar from "../Navbar/Navbar";
 
 const Homepage = () => {
@@ -12,8 +14,8 @@ const Homepage = () => {
         try {
             const response = await fetch(`/homepage/bytitle/${title}`);
             const data = await response.json();
-            setSearchResults([data]);
-            setShowResults(true);
+            setSearchResults(data); // data is an array, no need for []
+            setShowResults(true)
         } catch (error) {
             console.error("Error fetching search results: ", error);
         }
@@ -47,38 +49,44 @@ const Homepage = () => {
     };
 
     return (
+        
         <div className="main-homepage-div">
-            <Navbar/>
-            <h1 id='heading'>Search for a movie or tv show title</h1>
-            <input
-                type='text'
-                placeholder="Enter a title"
-                value={title}
-                onChange={(event) => setTitle(event.target.value)}
-            />
-            <button onClick={handleSearch}>Search</button>
-            { showResults && (
+            <Navbar />
+          <h1 id="heading">Search for a movie or tv show title</h1>
+          <input
+            type="text"
+            placeholder="Enter a title"
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+          />
+          <button onClick={handleSearch}>Search</button>
+          {showResults && (
             <div>
-                <h2>Search Results</h2>
-                <div>
-                {searchResults.map((result) => (
-                    <div key={result._id}>
-                        <p id='title'>{result.title}</p>
-                        <p>Synopsis: {result.synopsis}</p>
-                        <p>Release Year: {result.release_year}</p>
-                        <p>Rating: {result.rating}</p>
-                        <p>Links: {result.links}</p>
-                        <button
+              <h2>Search Results</h2>
+              <div>
+                {searchResults.map((result, index) => (
+                  <div key={index}>
+                    <Link to={`/movie-links/${result.id}/${result.title}`} style={{ textDecoration: 'none' }}><h2>{result.title}</h2></Link>
+                    <p>Synopsis: {result.overview}</p>
+                    <div className="poster-container">
+                      <img
+                        className="poster-image"
+                        src={`https://image.tmdb.org/t/p/w500/${result.poster_path}`} // poster_path is null in some movies
+                        alt={result.title}
+                      />
+                    </div>
+                    <p>Rating: {result.vote_average}</p>
+                    <button
                             onClick={() => addToWatchLater(result)}
                             disabled={isAddedToWatchLater(result._id)}
                         >
                             {isAddedToWatchLater(result._id) ? "Added" : "Add to Watch Later"}
-                        </button>
-                    </div>
+                    </button>
+                  </div>
                 ))}
-                </div>
+              </div>
             </div>
-            )}
+          )}
         </div>
     );
 }
