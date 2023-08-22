@@ -39,11 +39,13 @@ describe("User information page", () => {
         window.localStorage.setItem("token", "fakeToken");
     
         cy.intercept("GET", "/users/1", {
-            email: "testEmail",
-            name: "testUserName",
-            subscriptions: ['Netflix'],
-            genres: ['Action'],
-            token: 'fakeToken',
+            user: {
+                email: "testEmail",
+                name: "testUserName",
+                subscriptions: ['Netflix'],
+                genres: ['Action']
+            },
+                token: 'fakeToken'
         }).as('getUserInfo');
     
         cy.mount(
@@ -59,12 +61,14 @@ describe("User information page", () => {
         cy.intercept("PUT", "/users/1", {
             statusCode: 201,
             body: {
-            email: "testEmail",
-            name: "testUserName",
-            subscriptions: ['Hulu', 'Prime'], 
-            genres: ['Comedy', 'Drama'],     
-            token: 'fakeToken',
-            },
+                user: {
+                    email: "testEmail",
+                    name: "testUserName",
+                    subscriptions: ['Hulu', 'Prime'], 
+                    genres: ['Comedy', 'Drama']    
+                    }, 
+                token: 'fakeToken'
+            }
         }).as('updateUserInfo');
     
         cy.contains('Edit').click();
@@ -79,7 +83,7 @@ describe("User information page", () => {
     
         cy.wait('@updateUserInfo');
     
-        cy.get('[data-cy=subscriptions]').should('contain.text', "Subscriptions: HuluPrime");
-        cy.get('[data-cy=genres]').should('contain.text', "Genres: ComedyDrama");
+        cy.get('[data-cy=subscriptions]').should('contain.text', "Subscriptions: Hulu, Prime");
+        cy.get('[data-cy=genres]').should('contain.text', "Genres: Comedy, Drama");
         });
     });

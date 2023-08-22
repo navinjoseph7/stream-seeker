@@ -27,6 +27,8 @@ const UserProfile = () => {
                 window.localStorage.setItem("token", token);
                 setToken(window.localStorage.getItem("token"));
                 setUserInfo(data);
+                setSubscriptions(data.subscriptions)
+                setGenres(data.genres)
                 setShowDetails(true);
             })
         } 
@@ -51,7 +53,8 @@ const UserProfile = () => {
         })
         .then((response) => response.json())
         .then((data) => {
-            setUserInfo(data);
+            setUserInfo(data.user);
+            setToken(data.token)
             setEditing(false);
         });
     };
@@ -87,8 +90,8 @@ const UserProfile = () => {
                     </>
                 ) : (
                     <>
-                        <p className='subscriptions' data-cy="subscriptions">Subscriptions: {userInfo.subscriptions}</p>
-                        <p className='genres' data-cy="genres">Genres: {userInfo.genres}</p>
+                        <p className='subscriptions' data-cy="subscriptions">Subscriptions: {subscriptions}</p>
+                        <p className='genres' data-cy="genres">Genres: {genres}</p>
                         <button onClick={handleEdit}>Edit</button>
                     </>
                 )}
@@ -98,7 +101,7 @@ const UserProfile = () => {
         { showError && (
             <div>
                 <p>Sorry, you need to be logged in to see your profile</p>
-                <a href='./login'>Go to Login</a>
+                <a href='/login'>Go to Login</a>
             </div>
         )}
         </>
