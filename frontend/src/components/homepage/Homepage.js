@@ -1,4 +1,6 @@
 import React, {useState} from "react";
+import { Link, BrowserRouter as Router, Route, Switch } from "react-router-dom"; // Import React Router modules
+import MovieLinks from "../movielinks/MovieLinks";
 import '../homepage/Homepage.css'
 import Navbar from "../Navbar/Navbar";
 
@@ -21,39 +23,40 @@ const Homepage = () => {
 
 
     return (
-      <div className="main-homepage-div">
-        <h1 id="heading">Search for a movie or tv show title</h1>
-        <input
-          type="text"
-          placeholder="Enter a title"
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
-        />
-        <button onClick={handleSearch}>Search</button>
-        {showResults && (
-          <div>
-            <h2>Search Results</h2>
+        
+        <div className="main-homepage-div">
+          <h1 id="heading">Search for a movie or tv show title</h1>
+          <input
+            type="text"
+            placeholder="Enter a title"
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+          />
+          <button onClick={handleSearch}>Search</button>
+          {showResults && (
             <div>
-              {searchResults.map((result, index) => (
-                <div key={index}>
-                  <h2>{result.title}</h2>
-                  <p>Synopsis: {result.overview}</p>
-                  <div className="poster-container">
-                    <img
-                      className="poster-image"
-                      src={`https://image.tmdb.org/t/p/w500/${result.poster_path}`} // poster_path is null in some movies
-                      alt={result.title}
-                    />
+              <h2>Search Results</h2>
+              <div>
+                {searchResults.map((result, index) => (
+                  <div key={index}>
+                    <Link to={`/movie-links/${result.id}/${result.title}`} style={{ textDecoration: 'none' }}><h2>{result.title}</h2></Link>
+                    <p>Synopsis: {result.overview}</p>
+                    <div className="poster-container">
+                      <img
+                        className="poster-image"
+                        src={`https://image.tmdb.org/t/p/w500/${result.poster_path}`} // poster_path is null in some movies
+                        alt={result.title}
+                      />
+                    </div>
+                    <p>Rating: {result.vote_average}</p>
+                    
                   </div>
-                  <p>Rating: {result.vote_average}</p>
-                  <p>Links: {result?.links?.link}</p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-        )}
-      </div>
-    );
-}
-
+          )}
+        </div>
+      
+      );
+  }
 export default Homepage;
