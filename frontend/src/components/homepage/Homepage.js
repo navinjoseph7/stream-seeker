@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import '../homepage/Homepage.css'
+import Navbar from "../Navbar/Navbar";
 
 const Homepage = () => {
     const [searchResults, setSearchResults] = useState([]);
