@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 const MovieLinks = () => {
     const { movieId, movieTitle } = useParams(); // Get the movie title from URL parameters
     const [movieLinks, setMovieLinks] = useState({});
+    const [errorMessage, setErrorMessage] = useState("");
     useEffect(() => {
         const fetchMovieLinks = async () => {
             const url = `https://api.themoviedb.org/3/movie/${movieId}/watch/providers`;
@@ -15,9 +16,16 @@ const MovieLinks = () => {
                 }
             };
             const second_response = await fetch(url, options)
-            const second_data = await second_response.json();
-            const links = second_data.results.GB;
-            setMovieLinks(links)
+            if(second_response.status === 200) {
+                const second_data = await second_response.json();
+                const links = second_data.results.GB;
+                setMovieLinks(links)
+            }
+            else{
+                
+                setErrorMessage("This movie is not available in your region.");
+            
+            }
         };
     
         fetchMovieLinks();
@@ -26,6 +34,10 @@ const MovieLinks = () => {
   return (
     <div>
       <h1>{movieTitle}</h1>
+      {movieLinks === undefined  ? (
+                <p>This movie is not available in your region.</p>
+            ) : (
+      <div>
       <h2>Watch Links</h2>
       <ul>Link for The Movie Database : <a href={movieLinks.link}>{movieLinks.link}</a>
       <h2>Renting Platforms:</h2>
@@ -52,7 +64,7 @@ const MovieLinks = () => {
               {link.provider_name}
             </li>
        ))}
-      </ul>
+      </ul></div>)}
     </div>
   );
 };
