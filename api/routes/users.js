@@ -13,6 +13,7 @@ router.post("/:id/watch-later", UsersController.AddMovieToWatchLater);
 // Remove a movie from watch later
 router.delete("/:id/watch-later/:movieId", UsersController.RemoveMovieFromWatchLater);
 
+// Get all watch later movies
 router.get("/:id/watch-later", UsersController.GetWatchLaterMovies);
 
 module.exports = router;
