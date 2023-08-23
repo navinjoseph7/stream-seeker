@@ -2,6 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import { Button } from "@mui/material";
+import {Box} from "@mui/material";
+
 const MovieLinks = () => {
     const { movieId, movieTitle } = useParams(); // Get the movie title from URL parameters
     const [movieLinks, setMovieLinks] = useState({});
@@ -32,43 +38,62 @@ const MovieLinks = () => {
         fetchMovieLinks();
       }, [movieId]);
 
-  return (
-    <div>
-      <Navbar />
-      <h1>{movieTitle}</h1>
-      {movieLinks === undefined  ? (
-                <p>This movie is not available in your region.</p>
-            ) : (
-      <div>
-      <h2>Watch Links</h2>
-      <ul>Link for The Movie Database : <a href={movieLinks.link}>{movieLinks.link}</a>
-      <h2>Renting Platforms:</h2>
-        {movieLinks?.rent?.map((link, index) => (
-          <li key={index}>
-               <img
-                        className="poster-image"
-                        src={`https://image.tmdb.org/t/p/w500/${link.logo_path}`} // poster_path is null in some movies
-                        alt={link.provider_name} 
-                        style={{ width: "50px", height: "50px" }}
-                      />
-              {link.provider_name}
-            </li>
-       ))}
-       <h2>You can buy it on:</h2>
-        {movieLinks?.buy?.map((link, index) => (
-          <li key={index}>
-               <img
-                        className="poster-image"
-                        src={`https://image.tmdb.org/t/p/w500/${link.logo_path}`} // poster_path is null in some movies
-                        alt={link.provider_name} 
-                        style={{ width: "50px", height: "50px" }}
-                      />
-              {link.provider_name}
-            </li>
-       ))}
-      </ul></div>)}
-    </div>
-  );
+   return (
+     <div>
+       <Navbar />
+       <Container sx={{ textAlign: "center", my: 4 }}>
+         <Typography variant="h4" gutterBottom>
+           {movieTitle}
+         </Typography>
+         {movieLinks === undefined ? (
+           <Typography variant="body1">
+             This movie is not available in your region.
+           </Typography>
+         ) : (
+           <div>
+             <Typography variant="h5">Watch Links</Typography>
+             <Typography variant="h6" pb={3} pt={3}>
+               You can rent it on:
+             </Typography>
+             <Grid container justifyContent="center" spacing={2}>
+               {movieLinks?.rent?.map((link, index) => (
+                 <Grid item key={index}>
+                   <img
+                     className="poster-image"
+                     src={`https://image.tmdb.org/t/p/w500/${link.logo_path}`}
+                     alt={link.provider_name}
+                     style={{ width: "50px", height: "50px" }}
+                   />
+                   <Typography variant="body1">{link.provider_name}</Typography>
+                 </Grid>
+               ))}
+             </Grid>
+             <Typography variant="h6" pb={3} pt={3}>
+               You can buy it on:
+             </Typography>
+             <Grid container justifyContent="center" spacing={2}>
+               {movieLinks?.buy?.map((link, index) => (
+                 <Grid item key={index}>
+                   <img
+                     className="poster-image"
+                     src={`https://image.tmdb.org/t/p/w500/${link.logo_path}`}
+                     alt={link.provider_name}
+                     style={{ width: "50px", height: "50px" }}
+                   />
+                   <Typography variant="body1">{link.provider_name}</Typography>
+                 </Grid>
+               ))}
+             </Grid>
+           </div>
+         )}
+         <Box pt={3}>
+           <Button variant="contained" href={movieLinks.link}>
+             Link for The Movie Database
+           </Button>
+         </Box>
+       </Container>
+     </div>
+   );
 };
 
 export default MovieLinks;
