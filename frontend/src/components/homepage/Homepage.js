@@ -21,8 +21,6 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { TextField } from "@mui/material";
 const defaultTheme = createTheme();
-
-
 const Homepage = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [title, setTitle] = useState("");
@@ -36,6 +34,12 @@ const Homepage = () => {
     } catch (error) {
       console.error("Error fetching search results: ", error);
     }
+  };
+  const truncateSynopsis = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + "...";
+    }
+    return text;
   };
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -100,11 +104,7 @@ const Homepage = () => {
                     }}
                   >
                     <CardMedia
-                      component="div"
-                      sx={{
-                        // 16:9
-                        pt: "56.25%",
-                      }}
+                      component="img"
                       image={`https://image.tmdb.org/t/p/w500/${result.poster_path}`}
                       alt={result.title}
                     />
@@ -117,7 +117,9 @@ const Homepage = () => {
                           {result.title}
                         </Link>
                       </Typography>
-                      <Typography>Synopsis: {result.overview}</Typography>
+                      <Typography>
+                        {truncateSynopsis(result.overview, 350)}{" "}
+                      </Typography>
                     </CardContent>
                   </Card>
                 </Grid>
