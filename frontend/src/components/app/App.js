@@ -6,7 +6,7 @@ import MovieLinks from '../movielinks/MovieLinks';
 import React, { useState } from 'react';
 import UserProfile from '../user/UserProfile';
 import WatchLater from '../watchLater/WatchLater';
-import  '../../images/logo.png'
+
 
 import {
   useNavigate,
