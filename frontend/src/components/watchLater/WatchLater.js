@@ -6,6 +6,7 @@ const WatchLater = () => {
     const id = window.localStorage.getItem('userId')
     const [watchLaterMovies, setWatchLaterMovies] = useState([]); 
     console.log("ID is", id)
+    const [removedMovies, setRemovedMovies] = useState([]);
 
     useEffect(() => {
         fetchWatchLaterMovies();
@@ -26,6 +27,37 @@ const WatchLater = () => {
     };
     console.log("watchLaterMovies:", watchLaterMovies);
 
+    const removeFromWatchLater = async (movieId) => {
+        const id = window.localStorage.getItem('userId');
+        try {
+            const response = await fetch(`/users/${id}/watch-later/${movieId}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },   
+            });
+    
+            if (response.ok) {
+                const response = await fetch(`/users/${id}/watch-later`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setWatchLaterMovies(data.watchLater);
+                    // setRemovedMovies((prevMovies) => [...prevMovies, movieId]);
+                } else {
+                    console.error("Error getting watch-later movies:", response.statusText);
+                }
+            } else {
+                console.error("Error removing movie from watch later:", response.statusText);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
+
+    // const isRemovedFromWatchLater = (movieId) => {
+    //     return removedMovies.includes(movieId);
+    // };
+    
     return (
         <div>
         <Navbar />
@@ -44,6 +76,10 @@ const WatchLater = () => {
                     />
             </div>
             <p>Rating: {movie.vote_average}</p>
+            <button onClick={() => removeFromWatchLater(movie._id)}>
+                    {/* // disabled={isRemovedFromWatchLater(movie._id)} */}
+                Remove from Watch Later
+            </button>
             </div>
         ))}
         </ul>
