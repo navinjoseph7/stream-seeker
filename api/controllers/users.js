@@ -97,7 +97,7 @@ const UsersController = {
         return res.status(404).json({ error: "User not found" });
       }
 
-      const updatedWatchLater = user.watchLater.filter(movie => String(movie._id) !== movieToRemoveId);
+      const updatedWatchLater = user.watchLater.filter(movie => String(movie.id) !== movieToRemoveId);
       user.watchLater = updatedWatchLater;
 
       user.save((err) => {

@@ -8,13 +8,13 @@ const Homepage = () => {
     const [searchResults, setSearchResults] = useState([]);
     const [title, setTitle] = useState("");
     const [showResults, setShowResults] = useState(false);
-    const [addedMovies, setAddedMovies] = useState([]);
+    const [watchLaterMovies, setWatchLaterMovies] = useState([]);
 
     const handleSearch = async () => {
         try {
             const response = await fetch(`/homepage/bytitle/${title}`);
             const data = await response.json();
-            setSearchResults(data); // data is an array, no need for []
+            setSearchResults(data);
             setShowResults(true)
         } catch (error) {
             console.error("Error fetching search results: ", error);
@@ -35,17 +35,21 @@ const Homepage = () => {
             });
 
             if (response.ok) {
-                setAddedMovies((prevMovies) => [...prevMovies, movie._id]);
-            } else {
-                console.error("Error adding movie to watch later:", response.statusText);
-            }
+              const response = await fetch(`/users/${id}/watch-later`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setWatchLaterMovies(data.watchLater);
+                } else {
+                    console.error("Error getting watch-later movies:", response.statusText);
+                }
+              }
         } catch (error) {
             console.error("Error adding movie to watch later:", error);
         }
     };
 
-    const isAddedToWatchLater = (movieId) => {
-        return addedMovies.includes(movieId);
+    const isAddedToWatchLater = (movie) => {
+        return watchLaterMovies.some((watchLaterMovie) => watchLaterMovie.id === movie.id);
     };
 
     return (
@@ -78,9 +82,9 @@ const Homepage = () => {
                     <p>Rating: {result.vote_average}</p>
                     <button
                             onClick={() => addToWatchLater(result)}
-                            disabled={isAddedToWatchLater(result._id)}
+                            disabled={isAddedToWatchLater(result)}
                         >
-                            {isAddedToWatchLater(result._id) ? "Added" : "Add to Watch Later"}
+                            {isAddedToWatchLater(result) ? "Added" : "Add to Watch Later"}
                     </button>
                   </div>
                 ))}
