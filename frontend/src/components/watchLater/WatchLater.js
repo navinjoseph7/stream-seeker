@@ -5,8 +5,7 @@ import Navbar from '../Navbar/Navbar';
 const WatchLater = () => {
     const id = window.localStorage.getItem('userId')
     const [watchLaterMovies, setWatchLaterMovies] = useState([]); 
-    console.log("ID is", id)
-    const [removedMovies, setRemovedMovies] = useState([]);
+    
 
     useEffect(() => {
         fetchWatchLaterMovies();
@@ -25,8 +24,7 @@ const WatchLater = () => {
         console.error("Error fetching watch later movies:", error);
         }
     };
-    console.log("watchLaterMovies:", watchLaterMovies);
-
+    
     const removeFromWatchLater = async (movieId) => {
         const id = window.localStorage.getItem('userId');
         try {
@@ -42,7 +40,7 @@ const WatchLater = () => {
                 if (response.ok) {
                     const data = await response.json();
                     setWatchLaterMovies(data.watchLater);
-                    // setRemovedMovies((prevMovies) => [...prevMovies, movieId]);
+                    
                 } else {
                     console.error("Error getting watch-later movies:", response.statusText);
                 }
@@ -54,9 +52,6 @@ const WatchLater = () => {
         }
     }
 
-    // const isRemovedFromWatchLater = (movieId) => {
-    //     return removedMovies.includes(movieId);
-    // };
     
     return (
         <div>
@@ -65,7 +60,7 @@ const WatchLater = () => {
         {watchLaterMovies.length > 0 ? (
         <ul>
         {watchLaterMovies.map((movie) => (
-            <div key={movie._id}>
+            <div key={movie.id}>
             <Link to={`/movie-links/${movie.id}/${movie.title}`} style={{ textDecoration: 'none' }}><h2>{movie.title}</h2></Link>
             <p>Synopsis: {movie.overview}</p>
             <div className="poster-container">
@@ -76,8 +71,7 @@ const WatchLater = () => {
                     />
             </div>
             <p>Rating: {movie.vote_average}</p>
-            <button onClick={() => removeFromWatchLater(movie._id)}>
-                    {/* // disabled={isRemovedFromWatchLater(movie._id)} */}
+            <button onClick={() => removeFromWatchLater(movie.id)}>
                 Remove from Watch Later
             </button>
             </div>
