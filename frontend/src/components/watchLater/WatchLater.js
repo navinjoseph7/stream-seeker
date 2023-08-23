@@ -1,6 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import {Link} from 'react-router-dom'
-import Navbar from '../Navbar/Navbar';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import Navbar from "../Navbar/Navbar";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid"; // Import Grid component
+import { truncateSynopsis } from "../homepage/Homepage";
+const defaultTheme = createTheme();
 
 const WatchLater = () => {
     const id = window.localStorage.getItem('userId')
@@ -54,33 +64,66 @@ const WatchLater = () => {
 
     
     return (
-        <div>
+      <ThemeProvider theme={defaultTheme}>
         <Navbar />
-        <h2>Movies in Watch Later</h2>
-        {watchLaterMovies.length > 0 ? (
-        <ul>
-        {watchLaterMovies.map((movie) => (
-            <div key={movie.id}>
-            <Link to={`/movie-links/${movie.id}/${movie.title}`} style={{ textDecoration: 'none' }}><h2>{movie.title}</h2></Link>
-            <p>Synopsis: {movie.overview}</p>
-            <div className="poster-container">
-                    <img
-                    className="poster-image"
-                    src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} // poster_path is null in some movies
-                    alt={movie.title}
+        <Container sx={{ py: 8 }} maxWidth="md">
+          <Typography component="h2" variant="h4" align="center" gutterBottom>
+            Movies in Watch Later
+          </Typography>
+          <Grid container spacing={4}>
+            {" "}
+            {/* Use Grid container */}
+            {watchLaterMovies.length > 0 ? (
+              watchLaterMovies.map((movie) => (
+                <Grid item xs={12} sm={6} md={4} key={movie.id}>
+                  {" "}
+                  {/* Adjust the grid item widths */}
+                  <Card
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      height: "100%",
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      sx={{ width: "100%" }}
+                      image={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                      alt={movie.title}
                     />
-            </div>
-            <p>Rating: {movie.vote_average}</p>
-            <button onClick={() => removeFromWatchLater(movie.id)}>
-                Remove from Watch Later
-            </button>
-            </div>
-        ))}
-        </ul>
+                    <CardContent>
+                      <Link
+                        to={`/movie-links/${movie.id}/${movie.title}`}
+                        style={{ textDecoration: "none" }}
+                      >
+                        <Typography variant="h5" component="h2">
+                          {movie.title}
+                        </Typography>
+                      </Link>
+                      <Typography variant="body1">
+                        {truncateSynopsis(movie.overview, 350)}{" "}
+                      </Typography>
+                      <Typography variant="body2">
+                        Rating: {movie.vote_average}
+                      </Typography>
+                      <Button
+                        variant="contained"
+                        onClick={() => removeFromWatchLater(movie.id)}
+                      >
+                        Remove from Watch Later
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))
             ) : (
-        <p>No movies in watch later.</p>
-        )}
-        </div>
+              <Typography variant="body1" align="center">
+                No movies in watch later.
+              </Typography>
+            )}
+          </Grid>
+        </Container>
+      </ThemeProvider>
     );
 }
 
