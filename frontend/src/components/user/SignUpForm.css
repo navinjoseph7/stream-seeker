@@ -1,35 +1,95 @@
+/* SignUpForm.css */
 
 .sign-up-form {
-    max-width: 300px;
+    max-width: 350px;
     margin: 60px auto;
-    padding: 20px;
+    padding: 30px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(248, 248, 248, 0.1);
 }
 
 .sign-up-form h1 {
+    font-size: 35px;
+    margin-bottom: 20px;
     text-align: center;
+    color: #333;
+}
+
+.sign-up-form h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #555;
 }
 
 .sign-up-input {
-    width: 90%;
-    padding: 1rem;
-    margin-bottom: 1rem;
+    width: 93%;
+    padding: 10px;
+    margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 16px;
 }
 
 .sign-up-submit-button {
-    width: 40%;
-    padding: 10px;
-    margin: 10px 5px;
+    width: 100%;
+    padding: 12px;
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.2s ease;
+}
+
+.sign-up-submit-button:hover {
+    background-color: #0056b3;
+}
+
+.subscription-section, .genre-section {
+    margin-bottom: 20px;
+}
+
+.subscription-section h4, .genre-section h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #444;
 }
 
 .subscription-checkbox, .genre-checkbox {
-    margin: 0.6rem;
+    display: inline-block;
+    margin-right: 5px;
+    margin-left: 10px;
 }
+
+.signup-button {
+    display: block;
+    width: 100%;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    transition: background-color 0.2s ease;
+}
+
+.signup-button:hover {
+    background-color: #218838;
+}
+.logo-container {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.logo {
+    width: 200px; /* Adjust the width as needed */
+    height: auto;
+}
+

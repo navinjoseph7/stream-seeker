@@ -1,6 +1,6 @@
 import React from "react";
 import "../Navbar/Navbar.css"
-
+import logo from '../../images/whitelogo.png'
 const Navbar = () => {
 
     const userId = window.localStorage.getItem('userId')
@@ -8,7 +8,9 @@ const Navbar = () => {
     return (
         <nav className="navbar">
         <div className="brand">
-            <a href="/homepage">StreamSeeker</a>
+        <div className="logo-container">
+        <img src={logo} alt="Logo" className="logo" />
+        </div>
         </div>
         <ul className="links">
             <li><a href="/homepage">Homepage</a></li>

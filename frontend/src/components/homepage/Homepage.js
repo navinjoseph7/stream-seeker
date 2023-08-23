@@ -52,6 +52,7 @@ const Homepage = () => {
         
         <div className="main-homepage-div">
             <Navbar />
+          <div className="homepage-content">
           <h1 id="heading">Search for a movie or tv show title</h1>
           <input
             type="text"
@@ -87,6 +88,7 @@ const Homepage = () => {
               </div>
             </div>
           )}
+          </div>
         </div>
     );
 }
