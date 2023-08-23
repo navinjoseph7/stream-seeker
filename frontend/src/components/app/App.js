@@ -5,7 +5,9 @@ import Homepage from '../homepage/Homepage';
 import MovieLinks from '../movielinks/MovieLinks';
 import React, { useState } from 'react';
 import UserProfile from '../user/UserProfile';
-// import Feed from '../feed/Feed'
+import WatchLater from '../watchLater/WatchLater';
+
+
 import {
   useNavigate,
   Routes,
@@ -15,7 +17,7 @@ import {
 const App = () => {
     return (
         <Routes>
-          
+          <Route path='/users/:id/watch-later' element={<WatchLater />} />
           <Route path='/homepage' element={<Homepage/>}/>
           <Route path='/login'  element={<LoginForm  navigate={ useNavigate() }/>}/>
           <Route path='/signup' element={<SignUpForm navigate={ useNavigate() }/>}/>

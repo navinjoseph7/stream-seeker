@@ -22,9 +22,12 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { TextField } from "@mui/material";
 const defaultTheme = createTheme();
 const Homepage = () => {
-  const [searchResults, setSearchResults] = useState([]);
-  const [title, setTitle] = useState("");
-  const [showResults, setShowResults] = useState(false);
+
+const [searchResults, setSearchResults] = useState([]);
+const [title, setTitle] = useState("");
+const [showResults, setShowResults] = useState(false);
+const [watchLaterMovies, setWatchLaterMovies] = useState([]);
+  
   const handleSearch = async () => {
     try {
       const response = await fetch(`/homepage/bytitle/${title}`);
@@ -35,12 +38,46 @@ const Homepage = () => {
       console.error("Error fetching search results: ", error);
     }
   };
+  
+
+      const addToWatchLater = async (movie) => {
+        const id = window.localStorage.getItem('userId')
+        try {
+            const response = await fetch(`/users/${id}/watch-later`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    movie: movie,
+                }),
+            });
+
+            if (response.ok) {
+              const response = await fetch(`/users/${id}/watch-later`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setWatchLaterMovies(data.watchLater);
+                } else {
+                    console.error("Error getting watch-later movies:", response.statusText);
+                }
+              }
+        } catch (error) {
+            console.error("Error adding movie to watch later:", error);
+        }
+    };
+
+    const isAddedToWatchLater = (movie) => {
+        return watchLaterMovies.some((watchLaterMovie) => watchLaterMovie.id === movie.id);
+    };
+  
   const truncateSynopsis = (text, maxLength) => {
     if (text.length > maxLength) {
       return text.substring(0, maxLength) + "...";
     }
     return text;
   };
+  
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
@@ -120,6 +157,13 @@ const Homepage = () => {
                       <Typography>
                         {truncateSynopsis(result.overview, 350)}{" "}
                       </Typography>
+                        <p>Rating: {result.vote_average}</p>
+                        <button
+                                onClick={() => addToWatchLater(result)}
+                                disabled={isAddedToWatchLater(result)}
+                            >
+                                {isAddedToWatchLater(result) ? "Added" : "Add to Watch Later"}
+                        </button>
                     </CardContent>
                   </Card>
                 </Grid>
@@ -133,4 +177,5 @@ const Homepage = () => {
     </ThemeProvider>
   );
 };
+
 export default Homepage;
