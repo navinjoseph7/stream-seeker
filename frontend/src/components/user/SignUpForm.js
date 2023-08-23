@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import "./SignUpForm.css";
-
+import logo from '../../images/logo.png'
 const SignUpForm = ({ navigate }) => {
 
   const [email, setEmail] = useState("");
@@ -58,11 +58,16 @@ const SignUpForm = ({ navigate }) => {
       );
     }
   };
+  const login = () => {
+    navigate("/login");
+  };
 
 
     return (
       <form className="sign-up-form" onSubmit={handleSubmit}>
-        <h1>Stream Seeker</h1>
+        <div className="logo-container">
+        <img src={logo} alt="Logo" className="logo" />
+        </div>
         <h2>Sign Up</h2>
         <input
           className="sign-up-input"
@@ -99,6 +104,7 @@ const SignUpForm = ({ navigate }) => {
             />
             Netflix
           </label>
+          
           <label>
             <input
               className="subscription-checkbox"
@@ -138,6 +144,11 @@ const SignUpForm = ({ navigate }) => {
           type="submit"
           value="Sign Up"
         />
+        <br></br>
+        <p>Already Signed Up?</p>
+        <button onClick={login} className="signup-button">
+           Log In here!
+        </button>
       </form>
     );
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './LoginForm.css';
+import logo from '../../images/logo.png'
 
 
 const LogInForm = ({ navigate }) => {
@@ -47,7 +48,9 @@ const LogInForm = ({ navigate }) => {
 
      return (
        <form className="login-form" onSubmit={handleSubmit}>
-         <h1>Stream Seeker</h1>
+          <div className="logo-container">
+        <img src={logo} alt="Logo" className="logo" />
+          </div>
          <h2>Login</h2>
          <input
            className="login-input"
@@ -70,7 +73,7 @@ const LogInForm = ({ navigate }) => {
            className="submit-button"
            id="submit"
            type="submit"
-           value="Submit"
+           value="LOG IN"
          />
          
          {errorMessage && <p className="error"> {errorMessage} </p>}
