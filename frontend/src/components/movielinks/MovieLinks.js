@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Navbar from "../Navbar/Navbar";
 
 const MovieLinks = () => {
     const { movieId, movieTitle } = useParams(); // Get the movie title from URL parameters
@@ -33,6 +34,7 @@ const MovieLinks = () => {
 
   return (
     <div>
+      <Navbar />
       <h1>{movieTitle}</h1>
       {movieLinks === undefined  ? (
                 <p>This movie is not available in your region.</p>

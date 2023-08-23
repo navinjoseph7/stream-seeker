@@ -13,7 +13,7 @@ const Navbar = () => {
         <ul className="links">
             <li><a href="/homepage">Homepage</a></li>
             <li><a href={"/users/" + userId}>Your Profile</a></li>
-            <li><a href="/watchlater">Watch Later</a></li>
+            <li><a href={"/users/" + userId + "/watch-later"}>Watch Later</a></li>
             <li><a href="/login">Login</a></li>
             <li><a href="/signup">Signup</a></li>
         </ul>

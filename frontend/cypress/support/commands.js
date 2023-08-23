@@ -28,3 +28,16 @@ Cypress.Commands.add('signup', (email, password) => {
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add("signupAndLogin", () => {
+  cy.visit("/signup");
+  cy.get('input[name="email"]').type("test@example.com");
+  cy.get('input[name="password"]').type("testpassword");
+  cy.get('input[name="name"]').type("Test User");
+  cy.get('button[type="submit"]').click();
+
+  cy.visit("/login");
+  cy.get('input[name="email"]').type("test@example.com");
+  cy.get('input[name="password"]').type("testpassword");
+  cy.get('button[type="submit"]').click();
+});

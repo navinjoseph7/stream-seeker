@@ -148,4 +148,73 @@ describe("/users", () => {
     });
   })
 
+  describe("POST /users/:id/watch-later", () => {
+    test("adds a movie to watchLater array", async () => {
+      const user = new User({
+        email: 'test@example.com',
+        password: 'password',
+        name: 'testuser',
+        watchLater: [],
+      });
+      const savedUser = await user.save();
+      const userId = savedUser._id;
+      const token = TokenGenerator.jsonwebtoken(userId);
+  
+      const movieToAdd = {
+        title: "Taken",
+        release_year: 2010,
+        synopsis: "Man rescues daughter from bad people",
+        rating: 4,
+        links: "link",
+      };
+  
+      const response = await request(app)
+        .post(`/users/${userId}/watch-later`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({ movie: movieToAdd });
+  
+      expect(response.status).toEqual(200);
+  
+      const updatedUser = await User.findById(userId);
+      const addedMovie = updatedUser.watchLater[0];
+  
+      expect(addedMovie.title).toEqual(movieToAdd.title);
+      // Add more assertions for other properties if needed
+    });
+  });
+  
+  describe("DELETE /users/:id/watch-later/:movieId", () => {
+    test("removes a movie from watchLater array", async () => {
+      const user = new User({
+        email: 'test@example.com',
+        password: 'password',
+        name: 'testuser',
+        watchLater: [
+          {
+            title: "Taken",
+            release_year: 2010,
+            synopsis: "Man rescues daughter from bad people",
+            rating: 4,
+            links: "link",
+          },
+        ],
+      });
+      const savedUser = await user.save();
+      const userId = savedUser._id;
+      const movieId = savedUser.watchLater[0]._id; // Replace with the actual movie ID
+      const token = TokenGenerator.jsonwebtoken(userId);
+  
+      const response = await request(app)
+        .delete(`/users/${userId}/watch-later/${movieId}`)
+        .set("Authorization", `Bearer ${token}`);
+  
+      expect(response.status).toEqual(200);
+  
+      const updatedUser = await User.findById(userId);
+  
+      expect(updatedUser.watchLater.length).toEqual(0);
+    });
+    
+  });
+
 })
