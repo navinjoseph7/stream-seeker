@@ -158,7 +158,16 @@ const [watchLaterMovies, setWatchLaterMovies] = useState([]);
                       <Typography>
                         {truncateSynopsis(result.overview, 350)}{" "}
                       </Typography>
-                      <p>Rating: {result.vote_average}</p>
+                      <Typography
+                        variant="body2"
+                        p={2}
+                        pl={0}
+                        sx={{
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Rating: {result.vote_average}
+                      </Typography>
                       <Button
                         variant="contained"
                         onClick={() => addToWatchLater(result)}

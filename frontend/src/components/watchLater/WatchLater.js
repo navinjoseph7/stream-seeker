@@ -72,12 +72,12 @@ const WatchLater = () => {
           </Typography>
           <Grid container spacing={4}>
             {" "}
-            {/* Use Grid container */}
+        
             {watchLaterMovies.length > 0 ? (
               watchLaterMovies.map((movie) => (
                 <Grid item xs={12} sm={6} md={4} key={movie.id}>
                   {" "}
-                  {/* Adjust the grid item widths */}
+                
                   <Card
                     sx={{
                       display: "flex",
@@ -100,10 +100,17 @@ const WatchLater = () => {
                           {movie.title}
                         </Typography>
                       </Link>
-                      <Typography variant="body1">
+                      <Typography variant="body2">
                         {truncateSynopsis(movie.overview, 350)}{" "}
                       </Typography>
-                      <Typography variant="body2">
+                      <Typography
+                      variant="body2"
+                      p={2}
+                      pl={0}
+                      sx={{
+                        fontWeight: "bold"
+                      }}
+                    >
                         Rating: {movie.vote_average}
                       </Typography>
                       <Button
