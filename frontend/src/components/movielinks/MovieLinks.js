@@ -52,6 +52,11 @@ const MovieLinks = () => {
          ) : (
            <div>
              <Typography variant="h5">Watch Links</Typography>
+             <Box pt={3}>
+           <Button variant="contained" href={movieLinks?.link}>
+             Link for The Movie Database
+           </Button>
+         </Box>
              <Typography variant="h6" pb={3} pt={3}>
                You can rent it on:
              </Typography>
@@ -86,11 +91,7 @@ const MovieLinks = () => {
              </Grid>
            </div>
          )}
-         <Box pt={3}>
-           <Button variant="contained" href={movieLinks.link}>
-             Link for The Movie Database
-           </Button>
-         </Box>
+         
        </Container>
      </div>
    );
