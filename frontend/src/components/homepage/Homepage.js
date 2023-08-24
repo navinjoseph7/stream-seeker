@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, BrowserRouter as Router, Route, Switch } from "react-router-dom"; // Import React Router modules
 import MovieLinks from "../movielinks/MovieLinks";
-import "../homepage/Homepage.css";
 import Navbar from "../Navbar/Navbar";
 import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
@@ -21,6 +20,14 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { TextField } from "@mui/material";
 const defaultTheme = createTheme();
+
+ const truncateSynopsis = (text, maxLength) => {
+   if (text.length > maxLength) {
+     return text.substring(0, maxLength) + "...";
+   }
+   return text;
+ };
+
 const Homepage = () => {
 
 const [searchResults, setSearchResults] = useState([]);
@@ -38,7 +45,6 @@ const [watchLaterMovies, setWatchLaterMovies] = useState([]);
       console.error("Error fetching search results: ", error);
     }
   };
-  
 
       const addToWatchLater = async (movie) => {
         const id = window.localStorage.getItem('userId')
@@ -70,16 +76,11 @@ const [watchLaterMovies, setWatchLaterMovies] = useState([]);
     const isAddedToWatchLater = (movie) => {
         return watchLaterMovies.some((watchLaterMovie) => watchLaterMovie.id === movie.id);
     };
-  
-  const truncateSynopsis = (text, maxLength) => {
-    if (text.length > maxLength) {
-      return text.substring(0, maxLength) + "...";
-    }
-    return text;
-  };
+
   
   return (
     <ThemeProvider theme={defaultTheme}>
+      <Navbar />
       <CssBaseline />
       <main>
         <Box
@@ -157,13 +158,25 @@ const [watchLaterMovies, setWatchLaterMovies] = useState([]);
                       <Typography>
                         {truncateSynopsis(result.overview, 350)}{" "}
                       </Typography>
-                        <p>Rating: {result.vote_average}</p>
-                        <button
-                                onClick={() => addToWatchLater(result)}
-                                disabled={isAddedToWatchLater(result)}
-                            >
-                                {isAddedToWatchLater(result) ? "Added" : "Add to Watch Later"}
-                        </button>
+                      <Typography
+                        variant="body2"
+                        p={2}
+                        pl={0}
+                        sx={{
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Rating: {result.vote_average}
+                      </Typography>
+                      <Button
+                        variant="contained"
+                        onClick={() => addToWatchLater(result)}
+                        disabled={isAddedToWatchLater(result)}
+                      >
+                        {isAddedToWatchLater(result)
+                          ? "Added"
+                          : "Add to Watch Later"}
+                      </Button>
                     </CardContent>
                   </Card>
                 </Grid>
@@ -172,10 +185,22 @@ const [watchLaterMovies, setWatchLaterMovies] = useState([]);
         </Container>
       </main>
       <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
-        {/* Your existing footer */}
+        <Typography variant="h6" align="center" gutterBottom>
+          streamseeker
+        </Typography>
+        <Typography
+          variant="subtitle1"
+          align="center"
+          color="text.secondary"
+          component="p"
+        >
+          This website uses the TMDB API
+        </Typography>
       </Box>
     </ThemeProvider>
   );
 };
 
+
+export { truncateSynopsis };
 export default Homepage;
